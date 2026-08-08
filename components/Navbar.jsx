@@ -64,7 +64,7 @@ export default function Navbar() {
           color: 'var(--neon-cyan)',
           textShadow: '0 0 12px var(--neon-cyan)',
         }}>
-          &lt;AM/&gt;
+          &lt;AE/&gt;
         </span>
       </a>
 
@@ -78,7 +78,7 @@ export default function Navbar() {
       >
         {/* Loop through NAV_LINKS and render each one */}
         {NAV_LINKS.map((link) => (
-          
+          <a
             key={link.label}
             href={link.href}
             style={{
@@ -103,7 +103,7 @@ export default function Navbar() {
         ))}
 
         {/* Résumé button */}
-        
+        <a
           href="/resume.pdf"
           className="cyber-btn"
           style={{ padding: '8px 22px', fontSize: '0.6rem' }}
@@ -163,7 +163,7 @@ export default function Navbar() {
           gap: '24px',
         }}>
           {NAV_LINKS.map((link) => (
-            
+            <a
               key={link.label}
               href={link.href}
               onClick={() => setMenuOpen(false)}
