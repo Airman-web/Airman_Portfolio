@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Variables (our color system) ───────────────── */
+:root {
+  --cyber-black:  #050510;
+  --cyber-dark:   #0a0a1a;
+  --neon-cyan:    #00f5ff;
+  --neon-pink:    #ff006e;
+  --neon-purple:  #bd00ff;
+  --neon-green:   #00ff88;
+  --text-primary: #dce8ff;
+  --text-muted:   rgba(220, 232, 255, 0.45);
+  --border-dim:   rgba(0, 245, 255, 0.12);
+}
+
+/* ── Base ────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cyber-black);
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Custom Scrollbar ────────────────────────────────── */
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: var(--cyber-dark); }
+::-webkit-scrollbar-thumb {
+  background: var(--neon-cyan);
+  box-shadow: 0 0 6px var(--neon-cyan);
+}
+
+/* ── Grid Background ─────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 245, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ── Scanlines overlay ───────────────────────────────── */
+.scanlines::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* ── Neon text glows ─────────────────────────────────── */
+.glow-cyan  { text-shadow: 0 0 8px var(--neon-cyan),  0 0 25px var(--neon-cyan),  0 0 50px var(--neon-cyan); }
+.glow-pink  { text-shadow: 0 0 8px var(--neon-pink),  0 0 25px var(--neon-pink); }
+.glow-green { text-shadow: 0 0 8px var(--neon-green), 0 0 25px var(--neon-green); }
+
+/* ── Glitch animation ────────────────────────────────── */
+.glitch {
+  position: relative;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+.glitch::before {
+  color: var(--neon-cyan);
+  animation: glitch-1 4s infinite linear;
+  clip-path: inset(0 0 90% 0);
+}
+.glitch::after {
+  color: var(--neon-pink);
+  animation: glitch-2 4s infinite linear;
+  clip-path: inset(80% 0 0 0);
+}
+
+@keyframes glitch-1 {
+  0%,94%,100% { clip-path: inset(0 0 98% 0); transform: translateX(0); }
+  95% { clip-path: inset(20% 0 60% 0); transform: translateX(-4px); }
+  97% { clip-path: inset(40% 0 45% 0); transform: translateX(-3px); }
+  99% { clip-path: inset(55% 0 30% 0); transform: translateX(-4px); }
+}
+@keyframes glitch-2 {
+  0%,93%,100% { clip-path: inset(98% 0 0 0); transform: translateX(0); }
+  94% { clip-path: inset(60% 0 30% 0); transform: translateX(4px); }
+  96% { clip-path: inset(80% 0 5% 0);  transform: translateX(3px); }
+  98% { clip-path: inset(90% 0 2% 0);  transform: translateX(4px); }
+}
+
+/* ── Blinking cursor ─────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Floating animation ──────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* ── Pulse dot ───────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 6px var(--neon-green); }
+  50%       { box-shadow: 0 0 16px var(--neon-green), 0 0 30px var(--neon-green); }
+}
+
+/* ── Section layout ──────────────────────────────────── */
+.section-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 60px;
+}
+
+.section-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-dim), transparent);
+}
+
+/* ── Cyber button ────────────────────────────────────── */
+.cyber-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 34px;
+  background: transparent;
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+}
+.cyber-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--neon-cyan);
+  transform: translateX(-101%);
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+.cyber-btn:hover::before { transform: translateX(0); }
+.cyber-btn:hover          { color: var(--cyber-black); box-shadow: 0 0 25px rgba(0,245,255,0.4); }
+
+.cyber-btn-pink {
+  border-color: var(--neon-pink);
+  color: var(--neon-pink);
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+}
+.cyber-btn-pink::before { background: var(--neon-pink); }
+.cyber-btn-pink:hover   { color: var(--cyber-black); box-shadow: 0 0 25px rgba(255,0,110,0.4); }
+
+/* ── Cyber card ──────────────────────────────────────── */
+.cyber-card {
+  background: rgba(10, 10, 26, 0.7);
+  border: 1px solid var(--border-dim);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(12px);
+}
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  transition: left 0.6s ease;
+}
+.cyber-card:hover::before { left: 100%; }
+.cyber-card:hover {
+  border-color: rgba(0, 245, 255, 0.3);
+  box-shadow: 0 0 40px rgba(0, 245, 255, 0.07);
+  transform: translateY(-4px);
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section-wrap { padding: 70px 24px; }
+}
